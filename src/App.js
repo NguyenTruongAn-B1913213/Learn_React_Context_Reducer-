@@ -38,10 +38,13 @@
 // }
 import { useContext } from "react";
 import { StoreContext } from "./store";
-import { setTodoInput } from "./store/action";
+import { setTodoInput, addTodo } from "./store/action";
 function App() {
   const [state, dispatch] = useContext(StoreContext);
   const { Todos, Todo } = state;
+  const handleSubmit = () => {
+    dispatch(addTodo(Todo));
+  };
   return (
     <div style={{ padding: 20 }}>
       <input
@@ -51,6 +54,12 @@ function App() {
           dispatch(setTodoInput(e.target.value));
         }}
       ></input>
+      <button onClick={handleSubmit}> Add </button>
+      <ul>
+        {Todos.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }
